@@ -114,7 +114,7 @@
             :access-key  (env :aws-access-key-id)
             :secret-key  (env :aws-secret-key)
             :file        "target/project.zip"
-            :stack-name  "64bit Amazon Linux 2015.09 v2.0.7 running Docker 1.9.1"
+            :stack-name  "64bit Amazon Linux 2016.09 v2.4.0 running Docker 1.12.6"
             :bucket      (str project "-deploy")
             :beanstalk-envs (for [env ["dev" "staging" "prod"]
                                   :let [name (str project "-" env)]]
