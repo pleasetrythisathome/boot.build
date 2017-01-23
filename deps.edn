@@ -32,7 +32,7 @@
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
                  [org.clojure/tools.nrepl "0.2.12"]
-                 [org.clojure/tools.reader "1.0.0-beta1"]]
+                 [org.clojure/tools.reader "1.0.0-beta3"]]
  :clojurescript [[org.clojure/clojurescript "1.9.293"]
                  [com.google.guava/guava "19.0"]
                  [fence "0.2.0"]]
@@ -105,6 +105,7 @@
                  [cljsjs/moment "2.10.6-4"]]}
  :transit       [[com.cognitect/transit-clj "0.8.285"]
                  [com.cognitect/transit-cljs "0.8.237"]
+                 [commons-codec "1.10"]
                  [ring-transit-middleware "0.1.2"]]
  :url           [[com.cemerick/url "0.1.1"]]
  :viz           [[rhizome "0.2.5"]]
