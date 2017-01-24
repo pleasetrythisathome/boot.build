@@ -74,7 +74,8 @@
                                        :beanstalk]}
                                :env
                                :fs]
-                              (pull-deps deps "test")))))
+                              (pull-deps deps "test"))))
+ :source-paths #{"src"})
 
 (require
  '[boot.file :as file]
@@ -97,7 +98,7 @@
 (bootlaces! version)
 
 (task-options!
- pom {:project project
+ pom {:project (symbol project)
       :version version
       :license {"Eclipse Public License" "http://www.eclipse.org/legal/epl-v10.html"}
       :url (str "https://github.com/pleasetrythisathome/" project)
@@ -153,6 +154,7 @@
                          (conj paths dir)
                          paths))
                      % ["test" "dev"]))
+  (apply clojure.tools.namespace.repl/set-refresh-dirs (get-env :directories))
   (comp
    (watch)
    (notify)
@@ -200,3 +202,8 @@
    (dockerrun)
    (zip)
    (target)))
+
+(deftask show-version
+  "Show version"
+  []
+  (println version))
