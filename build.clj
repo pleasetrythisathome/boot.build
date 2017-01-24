@@ -68,17 +68,10 @@
                          (->> [{:boot [:laces]}]
                               (pull-deps deps "test")))))
 
-(require
- '[adzerk.bootlaces :refer :all])
-
-(def version (deduce-version-from-git))
-
-(bootlaces! version)
-
 (deftask show-version
   "Show version"
   []
-  (println version))
+  (println (deduce-version-from-git)))
 
 (deftask add-file
   "add deployment files to fileset"
