@@ -54,19 +54,13 @@
   ([deps scope expr]
    (cond->> (->> expr
                  pull->ks
-                 (mapv (partial get-in deps))
+                 (mapv (fn [ks]
+                         (let [v (get-in deps ks)]
+                           (assert v (str "missing dep: " ks))
+                           v)))
                  (mapcat flatten-vals)
                  (into []))
      scope (mapv #(conj % :scope scope)))))
-
-(set-env!
- :repositories #(conj % ["my.datomic.com" {:url "https://my.datomic.com/repo"
-                                           :username (get-sys-env "DATOMIC_USER")
-                                           :password (get-sys-env "DATOMIC_PASS")}])
- :dependencies #(vec
-                 (concat %
-                         (->> [{:boot [:laces]}]
-                              (pull-deps deps "test")))))
 
 (deftask show-version
   "Show version"
