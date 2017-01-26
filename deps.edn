@@ -57,8 +57,7 @@
                   :exclusions [commons-codec]]
                  [commons-codec "1.10"]
                  [pleasetrythisathome/email "0.0.1-SNAPSHOT"]]
- :errors        [[im.chit/hara.event "2.3.4"]
-                 [io.aviso/pretty "0.1.26"]]
+ :errors        [[im.chit/hara.event "2.3.4"]]
  :env           [[environ "1.0.2"]]
  :fs            [[me.raynes/fs "1.4.6"]]
  :html
@@ -80,7 +79,8 @@
  :keyboard      [[spellhouse/phalanges "0.1.6"]]
  :logging
  {:clj          [[com.taoensso/timbre "4.4.0-alpha1"
-                  :exclusions [io.aviso/pretty]]]
+                  :exclusions [io.aviso/pretty]]
+                 [io.aviso/pretty "0.1.26"]]
   :cljs         [[shodan "0.4.2"]]}
  :manifold      [[manifold "0.1.6-alpha4"]]
  :material      [[cljsjs/material "1.1.3-1"]]
