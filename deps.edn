@@ -42,7 +42,8 @@
  {:aop          [[milesian/aop "0.1.5"]
                  [milesian/identity "0.1.4"]]
   :component    [[com.stuartsierra/component "0.3.1"]
-                 [ib5k.holon/component "0.1.2-SNAPSHOT"]]
+                 [ib5k.holon/component "0.1.2-SNAPSHOT"]
+                 [suspendable "0.1.1"]]
   :codep        [[pleasetrythisathome.modular/co-dependency "0.2.1-SNAPSHOT"]]
   :schema       [[ib5k/component-schema "0.1.4-SNAPSHOT"]]}
  :css           [[garden "1.3.2"]
@@ -78,9 +79,8 @@
  :json          [[cheshire "5.6.1"]]
  :keyboard      [[spellhouse/phalanges "0.1.6"]]
  :logging
- {:clj          [[com.taoensso/timbre "4.4.0-alpha1"
-                  :exclusions [io.aviso/pretty]]
-                 [io.aviso/pretty "0.1.26"]]
+ {:clj          [[com.taoensso/timbre "4.4.0-alpha1"]
+                 [io.aviso/pretty "0.1.30"]]
   :cljs         [[shodan "0.4.2"]]}
  :manifold      [[manifold "0.1.6-alpha4"]]
  :material      [[cljsjs/material "1.1.3-1"]]
