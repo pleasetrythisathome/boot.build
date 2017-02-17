@@ -27,8 +27,8 @@
                           (:out (sh/sh "git" "describe" "--dirty" "--long" "--tags"))))]
     (cond
       dirty? (str (next-version version) "-" hash "-dirty")
-      (pos? (Long/parseLong commits)) (str (next-version version) "-" hash)
-      :otherwise version)))
+      (and commits (pos? (Long/parseLong commits))) (str (next-version version) "-" hash)
+      :otherwise (or version "v0.1.0"))))
 
 (deftask show-version
   "Show version"
