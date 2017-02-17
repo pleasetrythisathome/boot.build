@@ -1,6 +1,6 @@
 (ns pleasetrythisathome.build
   {:boot/export-tasks true}
-  (:require [pleasetrythisathome.deps :refer [deps]]
+  (:require [pleasetrythisathome.deps]
             [boot.core :refer :all]
             [boot.task.built-in :refer :all]
             [boot.file :as file]
@@ -98,13 +98,14 @@
       (future)))
 
 (defn ensure-deps!
-  [pull-expr]
-  (some->> pull-expr
-           (pull-deps deps)
-           (remove pod/dependency-loaded?)
-           seq
-           (scope-as "test")
-           (merge-env! :dependencies)))
+  ([pull-expr] (ensure-deps! pleasetrythisathome.deps/deps pull-expr))
+  ([deps pull-expr]
+   (some->> pull-expr
+            (pull-deps deps)
+            (remove pod/dependency-loaded?)
+            seq
+            (scope-as "test")
+            (merge-env! :dependencies))))
 
 ;; ========== Dev ==========
 
@@ -166,21 +167,6 @@
    (test-clj)
    (test-cljs)))
 
-;; ========== Component ==========
-
-(deftask dev-system
-  "Develop the server backend. The system is automatically started in
-  the dev profile."
-  []
-  (ensure-deps! [{:boot [:component]}])
-  (let [go (r boot-component.reloaded/go)]
-    (try
-      (go)
-      (catch Exception e
-        (util/fail "Exception while starting the system\n")
-        (util/print-ex e))))
-  identity)
-
 ;; ========== Deploy ==========
 
 (deftask add-file
@@ -198,18 +184,24 @@
       @add-files
       (-> fileset (add-resource tgt) commit!))))
 
-(deftask static
+(deftask css
   "This is used for creating optimized static resources under static"
   []
   (ensure-deps! [{:boot [:garden
-                         :autoprefixer
-                         :cljs]}])
+                         :autoprefixer]}])
   (let [garden (r org.martinklepsch.boot-garden/garden)
-        autoprefixer (r danielsz.autoprefixer/autoprefixer)
-        cljs (r adzerk.boot-cljs/cljs)]
+        autoprefixer (r danielsz.autoprefixer/autoprefixer)]
     (comp
      (garden :pretty-print true)
-     (autoprefixer)
+     (autoprefixer))))
+
+(deftask static
+  "This is used for creating optimized static resources under static"
+  []
+  (ensure-deps! [{:boot [:cljs]}])
+  (let [cljs (r adzerk.boot-cljs/cljs)]
+    (comp
+     (css)
      (cljs :optimizations :advanced))))
 
 (deftask uberjar
