@@ -146,7 +146,7 @@
   []
   (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:test]}])
-  (let [test (r 'adzerk.boot-test/test)]
+  (let [test (r adzerk.boot-test/test)]
     (comp
      (test))))
 
@@ -155,7 +155,7 @@
   []
   (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:cljs-test]}])
-  (let [test-cljs (r 'crisptrutski.boot-cljs-test/test-cljs)]
+  (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)]
     (comp
      (test-cljs))))
 
@@ -165,6 +165,21 @@
   (comp
    (test-clj)
    (test-cljs)))
+
+;; ========== Component ==========
+
+(deftask dev-system
+  "Develop the server backend. The system is automatically started in
+  the dev profile."
+  []
+  (ensure-deps! [{:boot [:component]}])
+  (let [go (r boot-component.reloaded/go)]
+    (try
+      (go)
+      (catch Exception e
+        (util/fail "Exception while starting the system\n")
+        (util/print-ex e))))
+  identity)
 
 ;; ========== Deploy ==========
 
@@ -182,3 +197,41 @@
     (with-pre-wrap fileset
       @add-files
       (-> fileset (add-resource tgt) commit!))))
+
+(deftask static
+  "This is used for creating optimized static resources under static"
+  []
+  (ensure-deps! [{:boot [:garden
+                         :autoprefixer
+                         :cljs]}])
+  (let [garden (r org.martinklepsch.boot-garden/garden)
+        autoprefixer (r danielsz.autoprefixer/autoprefixer)
+        cljs (r adzerk.boot-cljs/cljs)]
+    (comp
+     (garden :pretty-print true)
+     (autoprefixer)
+     (cljs :optimizations :advanced))))
+
+(deftask uberjar
+  "Build an uberjar"
+  []
+  (println "Building uberjar")
+  (comp
+   (aot)
+   (pom)
+   (uber)
+   (jar)
+   (target)))
+
+(deftask build-docker
+  "Build my application docker zip file."
+  [f jar PATH str "path to the jar file"]
+  (ensure-deps! [{:boot [:beanstalk]}])
+  (let [dockerrun (r adzerk.boot-beanstalk/dockerrun)]
+    (comp
+     (add-repo)
+     (add-file :path jar)
+     (dockerrun)
+     (zip)
+     (target))))
+
