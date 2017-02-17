@@ -10,6 +10,13 @@
             [clojure.java.shell :as sh]
             [clojure.string :as str]))
 
+;; ========== Utils ==========
+
+(defmacro r
+  "Ensure symbol is loaded, and then resolve it. Useful with pods."
+  [sym]
+  `(do (require '~(symbol (namespace sym))) (resolve '~sym)))
+
 ;; ========== Version ==========
 
 (defn next-version [version]
@@ -112,7 +119,6 @@
   "CIDER profile"
   [j cljs bool "include clojurescript?"]
   (require 'boot.repl)
-  (require '[boot.pod  :as pod])
   (swap! @(resolve 'boot.repl/*default-dependencies*)
          concat '[[org.clojure/tools.nrepl "0.2.12"]
                   [org.clojure/tools.namespace "0.3.0-alpha3"]
@@ -140,8 +146,7 @@
   []
   (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:test]}])
-  (require 'adzerk.boot-test)
-  (let [test (resolve 'adzerk.boot-test/test)]
+  (let [test (r 'adzerk.boot-test/test)]
     (comp
      (test))))
 
@@ -150,8 +155,7 @@
   []
   (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:cljs-test]}])
-  (require 'crisptrutski.boot-cljs-test)
-  (let [test-cljs (resolve 'crisptrutski.boot-cljs-test/test-cljs)]
+  (let [test-cljs (r 'crisptrutski.boot-cljs-test/test-cljs)]
     (comp
      (test-cljs))))
 
