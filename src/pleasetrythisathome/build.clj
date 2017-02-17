@@ -1,8 +1,16 @@
-(require '[boot.file :as file]
-         '[boot.util :as util]
-         '[clojure.java.io :as io]
-         '[clojure.java.shell :as sh]
-         '[clojure.string :as str])
+(ns pleasetrythisathome.build
+  {:boot/export-tasks true}
+  (:require [pleasetrythisathome.deps :refer [deps]]
+            [boot.core :refer :all]
+            [boot.task.built-in :refer :all]
+            [boot.file :as file]
+            [boot.pod  :as pod]
+            [boot.util :as util]
+            [clojure.java.io :as io]
+            [clojure.java.shell :as sh]
+            [clojure.string :as str]))
+
+;; ========== Version ==========
 
 (defn next-version [version]
   (when version
@@ -21,6 +29,13 @@
       dirty? (str (next-version version) "-" hash "-dirty")
       (pos? (Long/parseLong commits)) (str (next-version version) "-" hash)
       :otherwise version)))
+
+(deftask show-version
+  "Show version"
+  []
+  (println (deduce-version-from-git)))
+
+;; ========== Deps ==========
 
 (defn join-keys
   [ks]
@@ -62,25 +77,29 @@
                  (into []))
      scope (mapv #(conj % :scope scope)))))
 
-(deftask show-version
-  "Show version"
-  []
-  (println (deduce-version-from-git)))
+(defn scope-as
+  "Modify dependency co-ords to have particular scope.
+   Assumes not currently scoped"
+  [scope deps]
+  (for [co-ords deps]
+    (conj co-ords :scope scope)))
 
-(deftask add-file
-  "add deployment files to fileset"
-  [f path PATH str "the path to the file"
-   t target PATH str "the target in the fileset"]
-  (let [tgt (tmp-dir!)
-        add-files
-        (delay
-         (let [file (io/file path)
-               target (or target (.getName file))]
-           (util/info (str "Adding " path " to fileset as " target "...\n"))
-           (file/copy-with-lastmod file (io/file tgt target))))]
-    (with-pre-wrap fileset
-      @add-files
-      (-> fileset (add-resource tgt) commit!))))
+(defn make-pod [deps]
+  (-> (get-env)
+      (update :dependencies into (vec (seq deps)))
+      (pod/make-pod)
+      (future)))
+
+(defn ensure-deps!
+  [pull-expr]
+  (some->> pull-expr
+           (pull-deps deps)
+           (remove pod/dependency-loaded?)
+           seq
+           (scope-as "test")
+           (merge-env! :dependencies)))
+
+;; ========== Dev ==========
 
 (deftask nrepl
   "start a nrepl server"
@@ -113,3 +132,49 @@
     (swap! @(resolve 'boot.repl/*default-middleware*)
            concat '[cemerick.piggieback/wrap-cljs-repl]))
   identity)
+
+;; ========== Testing ==========
+
+(deftask test-clj
+  "test clj"
+  []
+  (set-env! :source-paths #(conj % "test"))
+  (ensure-deps! [{:boot [:test]}])
+  (require 'adzerk.boot-test)
+  (let [test (resolve 'adzerk.boot-test/test)]
+    (comp
+     (test))))
+
+(deftask test-cljs
+  "test cljs"
+  []
+  (set-env! :source-paths #(conj % "test"))
+  (ensure-deps! [{:boot [:cljs-test]}])
+  (require 'crisptrutski.boot-cljs-test)
+  (let [test-cljs (resolve 'crisptrutski.boot-cljs-test/test-cljs)]
+    (comp
+     (test-cljs))))
+
+(deftask test-all
+  "test all"
+  []
+  (comp
+   (test-clj)
+   (test-cljs)))
+
+;; ========== Deploy ==========
+
+(deftask add-file
+  "add deployment files to fileset"
+  [f path PATH str "the path to the file"
+   t target PATH str "the target in the fileset"]
+  (let [tgt (tmp-dir!)
+        add-files
+        (delay
+         (let [file (io/file path)
+               target (or target (.getName file))]
+           (util/info (str "Adding " path " to fileset as " target "...\n"))
+           (file/copy-with-lastmod file (io/file tgt target))))]
+    (with-pre-wrap fileset
+      @add-files
+      (-> fileset (add-resource tgt) commit!))))
