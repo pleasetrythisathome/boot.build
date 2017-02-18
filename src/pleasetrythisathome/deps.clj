@@ -25,8 +25,11 @@
      :cljs-test    [[crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT"]]
      :component    [[ib5k/boot-component "0.1.4-SNAPSHOT"]]
      :datomic      [[tailrecursion/boot-datomic "0.1.0-SNAPSHOT"]]
+     :devtools     [[binaryage/devtools "0.9.1"]
+                    [binaryage/dirac "X.X.X"]
+                    [powerlaces/boot-cljs-devtools "0.2.0"]]
      :garden       [[org.martinklepsch/boot-garden "1.3.0-0"]]
-     :http         [[pandeiro/boot-http "0.7.3"]]
+     :http         [[pandeiro/boot-http "0.7.6"]]
      :laces        [[adzerk/bootlaces "0.1.13"]]
      :medusa       [[pleasetrythisathome/boot-medusa "0.0.3-SNAPSHOT"
                      :exclusions [org.clojure/tools.namespace]]]
