@@ -26,7 +26,7 @@
      :component    [[ib5k/boot-component "0.1.4-SNAPSHOT"]]
      :datomic      [[tailrecursion/boot-datomic "0.1.0-SNAPSHOT"]]
      :devtools     [[binaryage/devtools "0.9.1"]
-                    [binaryage/dirac "X.X.X"]
+                    [binaryage/dirac "1.1.4"]
                     [powerlaces/boot-cljs-devtools "0.2.0"]]
      :garden       [[org.martinklepsch/boot-garden "1.3.0-0"]]
      :http         [[pandeiro/boot-http "0.7.6"]]

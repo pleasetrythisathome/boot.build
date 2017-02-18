@@ -142,23 +142,27 @@
 
 ;; ========== Testing ==========
 
+(deftask testing []
+  (merge-env! :resource-paths #{"test"})
+  identity)
+
 (deftask test-clj
   "test clj"
   []
-  (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:test]}])
   (let [test (r adzerk.boot-test/test)]
     (comp
+     (testing)
      (test))))
 
 (deftask test-cljs
   "test cljs"
   []
-  (set-env! :source-paths #(conj % "test"))
   (ensure-deps! [{:boot [:cljs-test]}])
   (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)]
     (comp
-     (test-cljs))))
+     (testing)
+     (test-cljs :exit? true))))
 
 (deftask test-all
   "test all"
