@@ -16,7 +16,7 @@
     :boot
     {:autoprefixer [[danielsz/boot-autoprefixer "0.0.9"]]
      :beanstalk    [[adzerk/boot-beanstalk "0.2.3"]]
-     :cljs         [[adzerk/boot-cljs "1.7.228-2"]]
+     :cljs         [[pleasetrythisathome/boot-cljs "1.9.198-SNAPSHOT"]]
      :cljs-repl    [[com.cemerick/piggieback "0.2.1"
                      :exclusions [org.clojure/clojure
                                   org.clojure/clojurescript]]
@@ -42,9 +42,8 @@
                     [org.clojure/tools.namespace "0.3.0-alpha3"]
                     [org.clojure/tools.nrepl "0.2.12"]
                     [org.clojure/tools.reader "1.0.0-beta3"]]
-    :clojurescript [[org.clojure/clojurescript "1.9.293"]
-                    [com.google.guava/guava "19.0"]
-                    [fence "0.2.0"]]
+    :clojurescript [[org.clojure/clojurescript "1.9.473"]
+                    [com.google.guava/guava "19.0"]]
     :component
     {:aop          [[milesian/aop "0.1.5"]
                     [milesian/identity "0.1.4"]]
