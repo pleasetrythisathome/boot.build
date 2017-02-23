@@ -37,7 +37,7 @@
      :template     [[adzerk/boot-template "1.0.0"]]
      :test         [[adzerk/boot-test "1.2.0"]]}
     :clojure       [[org.clojure/clojure "1.9.0-alpha14"]
-                    [org.clojure/core.async "0.2.374"]
+                    [org.clojure/core.async "0.3.426"]
                     [org.clojure/core.match "0.3.0-alpha4"]
                     [org.clojure/tools.namespace "0.3.0-alpha3"]
                     [org.clojure/tools.nrepl "0.2.12"]
