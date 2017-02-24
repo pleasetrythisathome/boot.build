@@ -1,11 +1,11 @@
 (ns pleasetrythisathome.build
   {:boot/export-tasks true}
-  (:require [pleasetrythisathome.deps]
-            [boot.core :refer :all]
+  (:require [boot.core :refer :all]
             [boot.task.built-in :refer :all]
             [boot.file :as file]
             [boot.pod  :as pod]
             [boot.util :as util]
+            [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.java.shell :as sh]
             [clojure.string :as str]))
@@ -42,6 +42,12 @@
   []
   (println (deduce-version-from-git)))
 
+(deftask show-dep
+  "Show version"
+  []
+  (println (pr-str ((juxt :project :version)
+                    (:task-options (meta #'pom))))))
+
 ;; ========== Deps ==========
 
 (defn join-keys
@@ -71,25 +77,25 @@
     coll
     (mapcat flatten-vals (vals coll))))
 
+(def deps (edn/read-string (slurp (io/resource "deps.edn"))))
+
 (defn pull-deps
-  ([deps expr] (pull-deps deps nil expr))
-  ([deps scope expr]
-   (cond->> (->> expr
-                 pull->ks
-                 (mapv (fn [ks]
-                         (let [v (get-in deps ks)]
-                           (assert v (str "missing dep: " ks))
-                           v)))
-                 (mapcat flatten-vals)
-                 (into []))
-     scope (mapv #(conj % :scope scope)))))
+  ([expr] (pull-deps deps expr))
+  ([deps expr]
+   (->> expr
+        pull->ks
+        (mapv (fn [ks]
+                (let [v (get-in deps ks)]
+                  (assert v (str "missing dep: " ks))
+                  v)))
+        (mapcat flatten-vals)
+        (into []))))
 
 (defn scope-as
   "Modify dependency co-ords to have particular scope.
    Assumes not currently scoped"
   [scope deps]
-  (for [co-ords deps]
-    (conj co-ords :scope scope)))
+  (mapv #(conj % :scope scope) deps))
 
 (defn make-pod [deps]
   (-> (get-env)
@@ -98,7 +104,7 @@
       (future)))
 
 (defn ensure-deps!
-  ([pull-expr] (ensure-deps! pleasetrythisathome.deps/deps pull-expr))
+  ([pull-expr] (ensure-deps! deps pull-expr))
   ([deps pull-expr]
    (some->> pull-expr
             (pull-deps deps)
