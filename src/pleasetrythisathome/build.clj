@@ -170,25 +170,22 @@
 (deftask cider
   "CIDER profile"
   [j cljs bool "include clojurescript?"]
-  (require 'boot.repl)
-  (swap! @(resolve 'boot.repl/*default-dependencies*)
-         concat '[[org.clojure/tools.nrepl "0.2.12"]
-                  [org.clojure/tools.namespace "0.3.0-alpha3"]
-                  [cider/cider-nrepl "0.15.0-SNAPSHOT"
-                   :exclusions [org.clojure/tools.reader
-                                org.clojure/java.classpath]]
-                  [refactor-nrepl "2.3.0-SNAPSHOT"
-                   :exclusions [org.clojure/tools.nrepl]]])
-  (swap! @(resolve 'boot.repl/*default-middleware*)
-         concat '[cider.nrepl/cider-middleware
-                  refactor-nrepl.middleware/wrap-refactor])
-  (when cljs
-    (swap! @(resolve 'boot.repl/*default-dependencies*)
-           concat '[[com.cemerick/piggieback "0.2.1"
-                     :exclusions [org.clojure/clojure
-                                  org.clojure/clojurescript]]])
-    (swap! @(resolve 'boot.repl/*default-middleware*)
-           concat '[cemerick.piggieback/wrap-cljs-repl]))
+  (let [cljs? (r cemerick.piggieback/wrap-cljs-repl)]
+    (swap! @(r boot.repl/*default-dependencies*)
+           concat (cond-> '[[org.clojure/tools.nrepl "0.2.12"]
+                            [org.clojure/tools.namespace "0.3.0-alpha3"]
+                            [cider/cider-nrepl "0.15.0-SNAPSHOT"
+                             :exclusions [org.clojure/tools.reader
+                                          org.clojure/java.classpath]]
+                            [refactor-nrepl "2.3.0-SNAPSHOT"
+                             :exclusions [org.clojure/tools.nrepl]]]
+                    cljs? (conj '[com.cemerick/piggieback "0.2.1"
+                                  :exclusions [org.clojure/clojure
+                                               org.clojure/clojurescript]])))
+    (swap! @(r boot.repl/*default-middleware*)
+           concat (cond-> '[cider.nrepl/cider-middleware
+                            refactor-nrepl.middleware/wrap-refactor]
+                    cljs? (conj 'cemerick.piggieback/wrap-cljs-repl))))
   identity)
 
 ;; ========== Testing ==========
