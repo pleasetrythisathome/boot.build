@@ -42,11 +42,15 @@
   []
   (println (deduce-version-from-git)))
 
+(defn dep
+  []
+  ((juxt :project :version)
+   (:task-options (meta #'pom))))
+
 (deftask show-dep
   "Show version"
   []
-  (println (pr-str ((juxt :project :version)
-                    (:task-options (meta #'pom))))))
+  (println (pr-str (dep))))
 
 ;; ========== Deps ==========
 
@@ -77,10 +81,18 @@
     coll
     (mapcat flatten-vals (vals coll))))
 
-(def deps (edn/read-string (slurp (io/resource "deps.edn"))))
+(defn merge-pull-expr
+  ([a] a)
+  ([a b]
+   (let [ks (set (filter keyword? (concat a b)))]
+     ))
+  ([a b & exprs]
+   (apply merge-pull-expr (merge-pull-expr a b) exprs)))
+
+(def dep-map (edn/read-string (slurp (io/resource "dependencies.edn"))))
 
 (defn pull-deps
-  ([expr] (pull-deps deps expr))
+  ([expr] (pull-deps dep-map expr))
   ([deps expr]
    (->> expr
         pull->ks
@@ -104,7 +116,7 @@
       (future)))
 
 (defn ensure-deps!
-  ([pull-expr] (ensure-deps! deps pull-expr))
+  ([pull-expr] (ensure-deps! dep-map pull-expr))
   ([deps pull-expr]
    (some->> pull-expr
             (pull-deps deps)
@@ -112,6 +124,45 @@
             seq
             (scope-as "test")
             (merge-env! :dependencies))))
+
+(ensure-deps! [:fs])
+
+(require '[me.raynes.fs :as fs])
+
+;; ========== Env ==========
+
+(defn read-deps
+  [dir]
+  (try (edn/read-string (slurp (io/file (str dir "/deps.edn"))))
+       (catch Exception e
+         (util/warn (str "missing deps.edn in dir: " dir)))))
+
+(defn project-env
+  ([] (project-env "."))
+  ([root]
+   (->> (for [[k dir] {:source-paths "src"
+                       :resource-paths "resources"
+                       :asset-paths "assets"}
+              :let [dir (str root "/" dir)]
+              :when (fs/exists? (io/file dir))]
+          [k #{dir}])
+        (into {})
+        (merge {:dependencies (pull-deps (read-deps root))}))))
+
+(defn merge-project-env!
+  [env]
+  (->> (update env :dependencies (partial remove pod/dependency-loaded?))
+       (apply concat)
+       (apply merge-env!)))
+
+(defn submodules
+  ([] (submodules "submodules"))
+  ([root]
+   (->> root
+        io/file
+        fs/list-dir
+        (filter fs/directory?)
+        (mapv (comp (partial str root "/") fs/name)))))
 
 ;; ========== Dev ==========
 
