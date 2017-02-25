@@ -81,14 +81,6 @@
     coll
     (mapcat flatten-vals (vals coll))))
 
-(defn merge-pull-expr
-  ([a] a)
-  ([a b]
-   (let [ks (set (filter keyword? (concat a b)))]
-     ))
-  ([a b & exprs]
-   (apply merge-pull-expr (merge-pull-expr a b) exprs)))
-
 (def dep-map (edn/read-string (slurp (io/resource "dependencies.edn"))))
 
 (defn pull-deps
