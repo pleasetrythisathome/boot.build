@@ -150,10 +150,12 @@
         (merge {:dependencies (pull-deps (read-deps root))}))))
 
 (defn merge-project-env!
-  [env]
-  (->> (update env :dependencies (partial remove pod/dependency-loaded?))
-       (apply concat)
-       (apply merge-env!)))
+  ([env] (merge-project-env! env false))
+  ([env submodule?]
+   (->> (cond-> env
+          submodule? (update :dependencies (partial remove pod/dependency-loaded?)))
+        (apply concat)
+        (apply merge-env!))))
 
 (defn submodules
   ([] (submodules "submodules"))
