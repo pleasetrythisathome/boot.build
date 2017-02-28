@@ -100,6 +100,17 @@
                  [sablono "0.7.1"]
                  [cljsjs/react-dom-server "15.0.0-0"]]
  :plumbing      [[prismatic/plumbing "0.5.3"]]
+ :repl
+ {:tools        [[org.clojure/tools.nrepl "0.2.12"]
+                 [org.clojure/tools.namespace "0.3.0-alpha3"]]
+  :cider        [[cider/cider-nrepl "0.15.0-SNAPSHOT"
+                  :exclusions [org.clojure/tools.reader
+                               org.clojure/java.classpath]]]
+  :piggieback   [[com.cemerick/piggieback "0.2.1"
+                   :exclusions [org.clojure/clojure
+                                org.clojure/clojurescript]]]
+  :refactor     [[refactor-nrepl "2.3.0-SNAPSHOT"
+                  :exclusions [org.clojure/tools.nrepl]]]}
  :schema        [[prismatic/schema "1.1.1"]]
  :specter       [[com.rpl/specter "0.10.0"]]
  :str           [[camel-snake-kebab "0.4.0"]
