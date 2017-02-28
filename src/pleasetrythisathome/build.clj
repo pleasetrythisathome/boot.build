@@ -25,17 +25,20 @@
       (when (and a b)
         (str a (inc (Long/parseLong b)))))))
 
+(defn git-describe
+  []
+  (next (re-matches #"(.*?)-(.*?)-(.*?)(-dirty)?\n"
+                    (:out (sh/sh "git" "describe" "--dirty" "--long" "--tags")))))
+
 (defn deduce-version-from-git
   "Avoid another decade of pointless, unnecessary and error-prone
   fiddling with version labels in source code."
   []
-  (let [[version commits hash dirty?]
-        (next (re-matches #"(.*?)-(.*?)-(.*?)(-dirty)?\n"
-                          (:out (sh/sh "git" "describe" "--dirty" "--long" "--tags"))))]
+  (let [[version commits hash dirty?] (git-describe)]
     (cond
       dirty? (str (next-version version) "-" hash "-dirty")
       (and commits (pos? (Long/parseLong commits))) (str (next-version version) "-" hash)
-      :otherwise (or version "v0.1.0"))))
+      :otherwise (or version "0.1.0-SNAPSHOT"))))
 
 (deftask show-version
   "Show version"
@@ -90,7 +93,7 @@
         pull->ks
         (mapv (fn [ks]
                 (let [v (get-in deps ks)]
-                  (assert v (str "missing dep: " ks))
+                  (assert v (str "missing dep: " ks "\n"))
                   v)))
         (mapcat flatten-vals)
         (into []))))
@@ -199,8 +202,6 @@
   []
   (ensure-deps! [{:boot [:test]}])
   (let [test (r adzerk.boot-test/test)]
-    (task-options!
-     test {:exclusions #{'pleasetrythisathome.build}})
     (comp
      (testing)
      (test))))
