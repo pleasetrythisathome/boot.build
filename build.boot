@@ -30,3 +30,8 @@
       :license {"The MIT License (MIT)" "http://opensource.org/licenses/mit-license.php"}
       :url (format "https://github.com/%s/%s" org project)
       :scm {:url (format "https://github.com/%s/%s" org project)}})
+
+(deftask deploy []
+  (comp
+   (build-jar)
+   (push :repo "clojars" :gpg-sign (not (.endsWith version "-SNAPSHOT")))))
