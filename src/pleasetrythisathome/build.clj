@@ -191,7 +191,7 @@
 ;; ========== Testing ==========
 
 (deftask testing []
-  (merge-env! :resource-paths #{"test"})
+  (merge-env! :source-paths #{"test"})
   identity)
 
 (deftask test-clj
@@ -199,6 +199,8 @@
   []
   (ensure-deps! [{:boot [:test]}])
   (let [test (r adzerk.boot-test/test)]
+    (task-options!
+     test {:exclusions #{'pleasetrythisathome.build}})
     (comp
      (testing)
      (test))))
