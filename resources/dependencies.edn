@@ -39,7 +39,7 @@
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/tools.reader "1.0.0-beta3"]]
- :clojurescript [[org.clojure/clojurescript "1.9.473"]
+ :clojurescript [[org.clojure/clojurescript "1.9.494"]
                  [com.google.guava/guava "19.0"]]
  :component
  {:aop          [[milesian/aop "0.1.5"]
