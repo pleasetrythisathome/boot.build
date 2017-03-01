@@ -122,11 +122,18 @@
             (scope-as "test")
             (merge-env! :dependencies))))
 
-(ensure-deps! [:fs])
-
-(require '[me.raynes.fs :as fs])
+(defn dep-version
+  [artifact]
+  (->> (pull-deps [:datomic])
+       (filter (comp (partial = artifact)
+                     first))
+       (first)
+       second))
 
 ;; ========== Env ==========
+
+(ensure-deps! [:fs])
+(require '[me.raynes.fs :as fs])
 
 (defn read-deps
   [dir]
