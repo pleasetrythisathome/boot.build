@@ -21,8 +21,6 @@
 
 (bootlaces! version)
 
-(util/info (str (dep) "\n"))
-
 (task-options!
  pom {:project (symbol org project)
       :version version
@@ -32,6 +30,7 @@
       :scm {:url (format "https://github.com/%s/%s" org project)}})
 
 (deftask deploy []
+  (util/info (str (dep) "\n"))
   (comp
    (build-jar)
    (push :repo "clojars" :gpg-sign (not (.endsWith version "-SNAPSHOT")))))
