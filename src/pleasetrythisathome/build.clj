@@ -104,11 +104,13 @@
   [scope deps]
   (mapv #(conj % :scope scope) deps))
 
-(defn make-pod [deps]
-  (-> (get-env)
-      (update :dependencies into (vec (seq deps)))
-      (pod/make-pod)
-      (future)))
+(defn make-pod
+  ([] (make-pod []))
+  ([deps]
+   (-> (get-env)
+       (update :dependencies into (vec (seq deps)))
+       (pod/make-pod)
+       (future))))
 
 (defn ensure-deps!
   ([pull-expr] (ensure-deps! dep-map pull-expr))
