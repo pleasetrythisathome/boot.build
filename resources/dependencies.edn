@@ -40,7 +40,7 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/tools.reader "1.0.0-beta3"]]
  :clojurescript [[org.clojure/clojurescript "1.9.494"]
-                 [com.google.guava/guava "19.0"]]
+                 [com.google.guava/guava "21.0"]]
  :component
  {:aop          [[milesian/aop "0.1.5"]
                  [milesian/identity "0.1.4"]]
