@@ -146,7 +146,8 @@
   ([root]
    (->> (for [[k dir] {:source-paths "src"
                        :resource-paths "resources"
-                       :asset-paths "assets"}
+                       :asset-paths "assets"
+                       :test-paths "test"}
               :let [dir (str root "/" dir)]
               :when (fs/exists? (io/file dir))]
           [k #{dir}])
@@ -204,6 +205,9 @@
 
 (deftask testing []
   (merge-env! :source-paths #{"test"})
+  (merge-env! :source-paths (->> (submodules)
+                                 (map (comp :test-paths project-env))
+                                 (reduce (partial into #{}))))
   identity)
 
 (deftask test-clj
