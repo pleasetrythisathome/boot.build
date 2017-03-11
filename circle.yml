@@ -8,7 +8,7 @@ machine:
 dependencies:
   pre:
     - sudo apt-get update
-    - sudo bash scripts/install-boot.sh
+    - sudo bash -c "cd /usr/local/bin && curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh && chmod 755 boot"
     - boot show -d:
         timeout: 7200
   override:
