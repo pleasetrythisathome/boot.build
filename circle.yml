@@ -1,0 +1,28 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    BOOT_CLOJURE_VERSION: 1.9.0-alpha14
+    BOOT_JVM_OPTIONS: -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx2g -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xverify:none -Ddatomic.txTimeoutMsec=60000
+
+dependencies:
+  pre:
+    - sudo apt-get update
+    - sudo bash scripts/install-boot.sh
+    - boot show -d:
+        timeout: 7200
+  override:
+    - mvn --fail-never dependency:go-offline || true
+  cache_directories:
+    - ~/.boot
+
+test:
+  override:
+    - boot test-all:
+        timeout: 1800
+
+deployment:
+  clojars:
+    branch: master
+    commands:
+      - boot deploy
