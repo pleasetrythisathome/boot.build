@@ -33,13 +33,13 @@
   :reload       [[adzerk/boot-reload "0.5.1"]]
   :template     [[adzerk/boot-template "1.0.0"]]
   :test         [[adzerk/boot-test "1.2.0"]]}
- :clojure       [[org.clojure/clojure "1.9.0-alpha14"]
+ :clojure       [[org.clojure/clojure "1.9.0-alpha19"]
                  [org.clojure/core.async "0.3.441"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/tools.reader "1.0.0-beta3"]]
- :clojurescript [[org.clojure/clojurescript "1.9.494"]
+ :clojurescript [[org.clojure/clojurescript "1.9.908"]
                  [com.google.guava/guava "21.0"]]
  :component
  {:aop          [[milesian/aop "0.1.5"]
