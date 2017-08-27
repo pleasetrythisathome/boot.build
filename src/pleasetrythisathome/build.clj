@@ -238,7 +238,8 @@
     (comp
      (testing)
      (test-cljs :exit? exit?
-                :js-env :phantom))))
+                :js-env :node
+                :cljs-opts {:parallel-build true}))))
 
 ;;; This prevents a name collision WARNING between the test task and
 ;;; clojure.core/test, a function that nobody really uses or cares
