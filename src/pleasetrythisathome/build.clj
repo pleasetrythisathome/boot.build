@@ -171,9 +171,10 @@
         (filter fs/directory?)
         (mapv (comp (partial str root "/") fs/name)))))
 
-(defn safe-merge-paths
+(defn safe-merge-paths!
   [k paths]
   (->> paths
+       (remove nil?)
        (filter fs/directory?)
        (into #{})
        (merge-env! k)))
@@ -211,10 +212,11 @@
 ;; ========== Testing ==========
 
 (deftask testing []
-  (safe-merge-paths :source-paths #{"test"})
-  (merge-env! :source-paths (->> (submodules)
-                                 (map (comp :test-paths project-env))
-                                 (reduce (partial into #{}))))
+  (safe-merge-paths! :source-paths #{"test"})
+  (safe-merge-paths! :source-paths (->> (submodules)
+                                        (map (comp :test-paths project-env))
+                                        (remove nil?)
+                                        (reduce (partial into #{}))))
   identity)
 
 (deftask test-clj
