@@ -255,6 +255,12 @@
      (test-clj)
      (test-cljs :exit? exit?))))
 
+(deftask auto-test
+  []
+  (comp
+    (watch)
+    (test :exit? false)))
+
 ;; ========== Deploy ==========
 
 (deftask add-file
