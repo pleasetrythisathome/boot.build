@@ -230,7 +230,7 @@
 
 (deftask test-cljs
   "test cljs"
-  [e exit? bool "include clojurescript?"]
+  [e exit? bool "exit?"]
   (ensure-deps! [{:boot [:cljs-test]}])
   (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)
         exit? (cond-> exit?
@@ -248,10 +248,12 @@
 
 (deftask test
   "test all"
-  []
-  (comp
-   (test-clj)
-   (test-cljs :exit? true)))
+  [e exit? bool "exit?"]
+  (let [exit? (cond-> exit?
+                (nil? exit?) not)]
+    (comp
+     (test-clj)
+     (test-cljs :exit? exit?))))
 
 ;; ========== Deploy ==========
 
