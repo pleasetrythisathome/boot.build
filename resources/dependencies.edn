@@ -97,10 +97,10 @@
                   :exclusions [juxt.modular/co-dependency
                                ring/ring-core
                                juxt.modular/email]]]
- :om            [[org.omcljs/om "1.0.0-alpha36"]
-                 [sablono "0.7.1"]
-                 [cljsjs/react-dom-server "15.0.0-0"]]
- :plumbing      [[prismatic/plumbing "0.5.3"]]
+ :om            [[org.omcljs/om "1.0.0-beta1"]
+                 [cljsjs/react-dom-server "15.5.4-0"]
+                 [sablono "0.8.0"]]
+ :plumbing      [[prismatic/plumbing "0.5.4"]]
  :repl
  {:tools        [[org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]]
