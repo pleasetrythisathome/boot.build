@@ -235,7 +235,8 @@
   (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)]
     (comp
      (testing)
-     (test-cljs :exit? exit?))))
+     (test-cljs :exit? exit?
+                :js-env :phantom))))
 
 ;;; This prevents a name collision WARNING between the test task and
 ;;; clojure.core/test, a function that nobody really uses or cares
