@@ -13,13 +13,14 @@
  :boot
  {:autoprefixer [[danielsz/boot-autoprefixer "0.0.9"]]
   :beanstalk    [[adzerk/boot-beanstalk "0.2.3"]]
-  :cljs         [[pleasetrythisathome/boot-cljs "1.9.198-SNAPSHOT"]]
+  :cljs         [[adzerk/boot-cljs "2.0.0"
+                  :exclusions [org.clojure/clojurescript]]]
   :cljs-repl    [[com.cemerick/piggieback "0.2.1"
                   :exclusions [org.clojure/clojure
                                org.clojure/clojurescript]]
-                 [adzerk/boot-cljs-repl "0.3.0"]
+                 [adzerk/boot-cljs-repl "0.3.3"]
                  [weasel "0.7.0"]]
-  :cljs-test    [[crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT"]]
+  :cljs-test    [[crisptrutski/boot-cljs-test "0.3.0"]]
   :component    [[ib5k/boot-component "0.1.4-SNAPSHOT"]]
   :datomic      [[tailrecursion/boot-datomic "0.1.0-SNAPSHOT"]]
   :devtools     [[binaryage/devtools "0.9.4"]
@@ -33,7 +34,7 @@
   :reload       [[adzerk/boot-reload "0.5.1"]]
   :template     [[adzerk/boot-template "1.0.0"]]
   :test         [[adzerk/boot-test "1.2.0"]]}
- :clojure       [[org.clojure/clojure "1.9.0-alpha14"]
+ :clojure       [[org.clojure/clojure "1.9.0-alpha16"]
                  [org.clojure/core.async "0.3.441"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
@@ -124,8 +125,8 @@
  {:clj          [[clj-time "0.11.0"]]
   :cljs         [[com.andrewmcveigh/cljs-time "0.4.0"]
                  [cljsjs/moment "2.10.6-4"]]}
- :transit       [[com.cognitect/transit-clj "0.8.285"]
-                 [com.cognitect/transit-cljs "0.8.237"]
+ :transit       [[com.cognitect/transit-clj "0.8.300"]
+                 [com.cognitect/transit-cljs "0.8.239"]
                  [commons-codec "1.10"]
                  [ring-transit-middleware "0.1.2"]]
  :url           [[com.cemerick/url "0.1.1"]]
