@@ -232,7 +232,9 @@
   "test cljs"
   [e exit? bool "include clojurescript?"]
   (ensure-deps! [{:boot [:cljs-test]}])
-  (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)]
+  (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)
+        exit? (cond-> exit?
+                (nil? exit?) not)]
     (comp
      (testing)
      (test-cljs :exit? exit?
