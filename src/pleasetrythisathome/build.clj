@@ -230,19 +230,25 @@
 
 (deftask test-cljs
   "test cljs"
-  []
+  [e exit? bool "include clojurescript?"]
   (ensure-deps! [{:boot [:cljs-test]}])
   (let [test-cljs (r crisptrutski.boot-cljs-test/test-cljs)]
     (comp
      (testing)
-     (test-cljs :exit? true))))
+     (test-cljs :exit? exit?))))
 
-(deftask test-all
+;;; This prevents a name collision WARNING between the test task and
+;;; clojure.core/test, a function that nobody really uses or cares
+;;; about.
+
+(ns-unmap 'boot.user 'test)
+
+(deftask test
   "test all"
   []
   (comp
    (test-clj)
-   (test-cljs)))
+   (test-cljs :exit? true)))
 
 ;; ========== Deploy ==========
 
