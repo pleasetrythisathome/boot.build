@@ -190,7 +190,7 @@
 
 (deftask cider
   "CIDER profile"
-  [j cljs bool "include clojurescript?"]
+  []
   (let [cljs? (r cemerick.piggieback/wrap-cljs-repl)]
     (swap! @(r boot.repl/*default-dependencies*)
            concat (cond-> '[[org.clojure/tools.nrepl "0.2.12"]
