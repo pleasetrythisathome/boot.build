@@ -26,7 +26,7 @@
                  [binaryage/dirac "1.2.15"]
                  [powerlaces/boot-cljs-devtools "0.2.0"]]
   :garden       [[org.martinklepsch/boot-garden "1.3.0-0"]]
-  :http         [[pandeiro/boot-http "0.7.6"]]
+  :http         [[pandeiro/boot-http "0.8.3"]]
   :laces        [[adzerk/bootlaces "0.1.13"]]
   :medusa       [[pleasetrythisathome/boot-medusa "0.0.3-SNAPSHOT"
                   :exclusions [org.clojure/tools.namespace]]]
@@ -84,7 +84,8 @@
                  [cljs-http "0.1.40"]
                  [org.apache.httpcomponents/httpclient "4.5.2"]]}
  :interpolate   [[bardo "0.1.2-SNAPSHOT"]]
- :json          [[cheshire "5.6.1"]]
+ :json          [[cheshire "5.8.0"]
+                 [com.fasterxml.jackson.core/jackson-core "2.9.0"]]
  :keyboard      [[spellhouse/phalanges "0.1.6"]]
  :logging
  {:clj          [[com.taoensso/timbre "4.4.0-alpha1"]
@@ -130,4 +131,5 @@
  :url           [[com.cemerick/url "0.1.1"]]
  :viz           [[rhizome "0.2.5"]]
  :queue         [[factual/durable-queue "0.1.5"
-                  :exclusions [byte-streams]]]}
+                  :exclusions [byte-streams]]]
+ :xml           [[org.clojure/data.xml "0.0.8"]]}
