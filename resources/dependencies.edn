@@ -52,7 +52,10 @@
   :schema       [[ib5k/component-schema "0.1.4-SNAPSHOT"]]}
  :css           [[garden "1.3.2"]
                  [trowel "0.1.0-SNAPSHOT"]]
- :datascript    [[datascript "0.15.5"]]
+ :datascript    [[datascript "0.15.5"]
+                 [datascript-transit "0.2.2"
+                  :exclusions [com.cognitect/transit-clj
+                               com.cognitect/transit-cljs]]]
  :datomic       [[com.datomic/datomic-pro "0.9.5350" ;; "0.9.5561"
                   :exclusions [joda-time
                                org.slf4j/slf4j-nop
