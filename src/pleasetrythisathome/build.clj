@@ -284,10 +284,12 @@
   []
   (ensure-deps! [{:boot [:garden
                          :autoprefixer]}])
-  (let [garden (r org.martinklepsch.boot-garden/garden)
-        autoprefixer (r danielsz.autoprefixer/autoprefixer)]
+  (let [autoprefixer (r danielsz.autoprefixer/autoprefixer)
+        garden (r org.martinklepsch.boot-garden/garden)
+        sass (r deraen.boot-sass/sass)]
     (comp
      (garden :pretty-print true)
+     (sass)
      (autoprefixer))))
 
 (deftask static
