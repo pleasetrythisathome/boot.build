@@ -75,7 +75,7 @@
     (map? expr) (mapcat identity
                         (for [[k vals] expr]
                           (mapv (partial vector k) vals)))
-    (vector? expr) expr))
+    (vector? expr) [expr]))
 
 (defn pull->ks
   [expr]
@@ -95,10 +95,14 @@
   ([deps expr]
    (->> expr
         pull->ks
+        (remove nil?)
+        (remove (partial some nil?))
         (mapv (fn [ks]
-                (let [v (get-in deps ks)]
-                  (assert v (str "missing dep: " ks "\n"))
-                  v)))
+                (if (symbol? (first ks))
+                  [ks]
+                  (let [v (get-in deps ks)]
+                    (assert v (str "missing dep: " ks "\n"))
+                    v))))
         (mapcat flatten-vals)
         (into []))))
 
