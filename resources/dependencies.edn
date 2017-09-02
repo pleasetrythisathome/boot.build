@@ -134,7 +134,7 @@
                  [commons-codec "1.10"]
                  [ring-transit-middleware "0.1.2"]]
  :url           [[com.cemerick/url "0.1.1"]]
- :viz           [[rhizome "0.2.5"]]
+ :viz           [[rhizome "0.2.7"]]
  :queue         [[factual/durable-queue "0.1.5"
                   :exclusions [byte-streams]]]
  :xml           [[org.clojure/data.xml "0.0.8"]]}
