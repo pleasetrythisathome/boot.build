@@ -39,7 +39,6 @@
                  [org.clojure/core.async "0.3.441"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
-                 [org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/tools.reader "1.0.0-beta3"]]
  :clojurescript [[org.clojure/clojurescript "1.9.494"]
                  [com.google.guava/guava "21.0"]]
@@ -107,12 +106,12 @@
                  [sablono "0.8.0"]]
  :plumbing      [[prismatic/plumbing "0.5.4"]]
  :repl
- {:tools        [[org.clojure/tools.nrepl "0.2.12"]
+ {:tools        [[org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]]
   :cider        [[cider/cider-nrepl "0.15.1-SNAPSHOT"
                   :exclusions [org.clojure/tools.reader
                                org.clojure/java.classpath]]]
-  :piggieback   [[com.cemerick/piggieback "0.2.1"
+  :cljs         [[com.cemerick/piggieback "0.2.1"
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript]]]
   :refactor     [[refactor-nrepl "2.4.0-SNAPSHOT"
