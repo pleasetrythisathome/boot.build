@@ -16,7 +16,10 @@
 (defmacro r
   "Ensure symbol is loaded, and then resolve it. Useful with pods."
   [sym]
-  `(do (require '~(symbol (namespace sym))) (resolve '~sym)))
+  `(try (require '~(symbol (namespace sym)))
+        (resolve '~sym)
+        (catch Throwable e#
+          false)))
 
 ;; ========== Version ==========
 
