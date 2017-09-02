@@ -1,5 +1,6 @@
 (ns pleasetrythisathome.build
   {:boot/export-tasks true}
+  (:refer-clojure :exclude [test])
   (:require [boot.core :refer :all]
             [boot.task.built-in :refer :all]
             [boot.file :as file]
