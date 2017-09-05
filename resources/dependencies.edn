@@ -84,8 +84,8 @@
   :http-kit     [[http-kit "2.1.21-alpha2"]]
   :ring         [[ring "1.4.0"]
                  [juxt.modular/ring "0.5.3"]]
-  :requests     [[clj-http "3.0.1"]
-                 [cljs-http "0.1.40"]
+  :requests     [[clj-http "3.7.0"]
+                 [cljs-http "0.1.43"]
                  [org.apache.httpcomponents/httpclient "4.5.2"]]}
  :interpolate   [[bardo "0.1.2-SNAPSHOT"]]
  :json          [[cheshire "5.8.0"]
