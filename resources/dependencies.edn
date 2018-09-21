@@ -104,6 +104,7 @@
  :om            [[org.omcljs/om "1.0.0-beta1"]
                  [cljsjs/react-dom-server "15.5.4-0"]
                  [sablono "0.8.0"]]
+ :overtone      [[overtone "0.10.3"]]
  :plumbing      [[prismatic/plumbing "0.5.4"]]
  :repl
  {:tools        [[org.clojure/tools.nrepl "0.2.13"]
