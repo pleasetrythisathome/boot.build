@@ -110,7 +110,7 @@
  :repl
  {:tools        [[org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]]
-  :cider        [[cider/cider-nrepl "0.15.1-SNAPSHOT"
+  :cider        [[cider/cider-nrepl "0.17.0-SNAPSHOT"
                   :exclusions [org.clojure/tools.reader
                                org.clojure/java.classpath]]]
   :cljs         [[com.cemerick/piggieback "0.2.1"
