@@ -35,6 +35,7 @@
   :sass         [[deraen/boot-sass "0.3.1"]]
   :template     [[adzerk/boot-template "1.0.0"]]
   :test         [[adzerk/boot-test "1.2.0"]]}
+ :bytes         [[gloss "0.2.6"]]
  :clojure       [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/core.async "0.3.441"]
                  [org.clojure/core.match "0.3.0-alpha4"]
@@ -106,7 +107,8 @@
                  [cljsjs/react-dom-server "15.5.4-0"]
                  [sablono "0.8.0"]]
  :overtone      [[overtone "0.10.3"]]
- :plumbing      [[prismatic/plumbing "0.5.4"]]
+ :plumbing      [[prismatic/plumbing "0.5.3"]]
+ :processing    [[quil "2.7.1"]]
  :repl
  {:tools        [[org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]]
@@ -119,6 +121,7 @@
   :refactor     [[refactor-nrepl "2.4.0-SNAPSHOT"
                   :exclusions [org.clojure/tools.nrepl]]]}
  :schema        [[prismatic/schema "1.1.1"]]
+ :sound         [[ddf.minim "2.2.1-b8afdc1-SNAPSHOT"]]
  :specter       [[com.rpl/specter "0.10.0"]]
  :str           [[camel-snake-kebab "0.4.0"]
                  [superstring "2.1.0"]]
