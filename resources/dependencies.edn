@@ -13,13 +13,14 @@
  :boot
  {:autoprefixer [[danielsz/boot-autoprefixer "0.0.9"]]
   :beanstalk    [[adzerk/boot-beanstalk "0.2.3"]]
-  :cljs         [[adzerk/boot-cljs "2.0.0"
+  :cljs         [[adzerk/boot-cljs "2.1.5"
                   :exclusions [org.clojure/clojurescript]]]
-  :cljs-repl    [[com.cemerick/piggieback "0.2.1"
+  :cljs-repl    [[cider/piggieback "0.3.9"
                   :exclusions [org.clojure/clojure
                                org.clojure/clojurescript]]
-                 [adzerk/boot-cljs-repl "0.3.3"]
-                 [weasel "0.7.0"]]
+                 [adzerk/boot-cljs-repl "0.4.0"]
+                 [weasel "0.7.0"]
+                 [nrepl "0.4.5"]]
   :cljs-test    [[crisptrutski/boot-cljs-test "0.3.0"]]
   :component    [[ib5k/boot-component "0.1.4-SNAPSHOT"]]
   :datomic      [[tailrecursion/boot-datomic "0.1.0-SNAPSHOT"]]
@@ -31,18 +32,17 @@
   :laces        [[adzerk/bootlaces "0.1.13"]]
   :medusa       [[pleasetrythisathome/boot-medusa "0.0.3-SNAPSHOT"
                   :exclusions [org.clojure/tools.namespace]]]
-  :reload       [[adzerk/boot-reload "0.5.1"]]
+  :reload       [[adzerk/boot-reload "0.6.0"]]
   :sass         [[deraen/boot-sass "0.3.1"]]
   :template     [[adzerk/boot-template "1.0.0"]]
   :test         [[adzerk/boot-test "1.2.0"]]}
  :bytes         [[gloss "0.2.6"]]
- :clojure       [[org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/core.async "0.3.441"]
+ :clojure       [[org.clojure/clojure "1.10.0-RC3"]
+                 [org.clojure/core.async "0.4.490"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/tools.namespace "0.3.0-alpha3"]
                  [org.clojure/tools.reader "1.0.0-beta3"]]
- :clojurescript [[org.clojure/clojurescript "1.9.494"]
-                 [com.google.guava/guava "21.0"]]
+ :clojurescript [[org.clojure/clojurescript "1.10.439"]]
  :component
  {:aop          [[milesian/aop "0.1.5"]
                  [milesian/identity "0.1.4"]]
